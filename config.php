@@ -1,6 +1,12 @@
 <?php
 try {
     $pdoConn = new PDO("mysql:host=localhost;dbname=dbpdo", "root", "");
+    $sql = 'SELECT * from  Article';
+
+    $statement = $pdoConn->query($sql);
+
+// get all publishers
+    $articles = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 } catch (\Throwable$th) {
     echo "db has not been connected <br>";
@@ -65,5 +71,19 @@ if (isset($_POST['submit'])) {
     </div>
     </div>
     </form>
+
+    <div class="mt-10 flex items-center justify-space-between w-full flex-wrap">
+        <?php foreach ($articles as $article): ?>
+            <div class="p-12 flex space-x-5 items-center ">
+                <p>reference : <?php echo $article['Reference'] ?></p>
+                <p>liblle : <?php echo $article['Libelle'] ?></p>
+                <p>prix : <?php echo $article['Prix'] ?></p>
+                <div class="w-16">
+                    <img src="<?php echo $article['Photo'] ?>" alt="">
+                </div>
+            </div>
+        <?php endforeach;?>
+
+    </div>
 </body>
 </html>
